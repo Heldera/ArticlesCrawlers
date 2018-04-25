@@ -22,7 +22,6 @@ for entry in root.findall('{http://www.w3.org/2005/Atom}entry'):
              print(str(number), '[Title]: '+ title.replace('\n',' ') + '\n', ' [Published_date]: ' + published_date + '\n', ' [Authors]: ' + str(authors).replace('[','').replace(']','') + '\n', ' [Abstract]' + summary.replace('\n',' '), '\n')
              number += 1   
 
-
 url_1 = 'http://ieeexplore.ieee.org/xpl/mostRecentIssue.jsp?punumber=4410506'
 response = urllib.request.urlopen(url_1)
 soup = BeautifulSoup(response.read().decode('utf-8'), "html.parser")

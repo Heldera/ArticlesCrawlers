@@ -1,10 +1,8 @@
 from urllib.request import urlopen
-
 from bs4 import BeautifulSoup
 import urllib.request
 import re
 import json
-
 url = 'http://export.arxiv.org/api/query?search_query=system+dynamics&max_results=3'
 with urlopen(url) as request:
      data = request.read()
@@ -20,8 +18,6 @@ for entry in root.findall('{http://www.w3.org/2005/Atom}entry'):
              authors = [x[0].text for x in entry.findall('{http://www.w3.org/2005/Atom}author')]
              print(str(number), title, published_date, authors, summary.replace('\n',' '))
              number += 1   
-
-
 
 url_1 = 'http://ieeexplore.ieee.org/xpl/mostRecentIssue.jsp?punumber=4410506'
 response = urllib.request.urlopen(url_1)

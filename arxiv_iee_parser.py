@@ -1,11 +1,14 @@
 from urllib.request import urlopen
+
 from bs4 import BeautifulSoup
 import urllib.request
 import re
 import json
+
 url = 'http://export.arxiv.org/api/query?search_query=system+dynamics&max_results=3'
 with urlopen(url) as request:
      data = request.read()
+
 number = 1
 
 from xml.etree import ElementTree
@@ -16,8 +19,9 @@ for entry in root.findall('{http://www.w3.org/2005/Atom}entry'):
              summary = entry.findall('{http://www.w3.org/2005/Atom}summary')[0].text
              published_date = entry.findall('{http://www.w3.org/2005/Atom}published')[0].text
              authors = [x[0].text for x in entry.findall('{http://www.w3.org/2005/Atom}author')]
-             print(str(number), title, published_date, authors, summary.replace('\n',' '))
+             print(str(number), '[Title]: '+ title.replace('\n',' ') + '\n', ' [Published_date]: ' + published_date + '\n', ' [Authors]: ' + str(authors).replace('[','').replace(']','') + '\n', ' [Abstract]' + summary.replace('\n',' '), '\n')
              number += 1   
+
 
 url_1 = 'http://ieeexplore.ieee.org/xpl/mostRecentIssue.jsp?punumber=4410506'
 response = urllib.request.urlopen(url_1)
@@ -35,7 +39,7 @@ for element in soup.find_all('a', href=re.compile("stamp\\.jsp")):
                       data_1 = json.loads(match.group(1))
                       doi = data_1['doi']
                       authors = data_1['authors']
-                      print(str(authors))
+                      print('999 ', str(authors))
                       abstract = data_1['abstract']
-                      print(str(number), str(abstract))
-    number += 1                
+                      #print(str(number), str(abstract))
+    number += 1                            

@@ -1,5 +1,4 @@
 from urllib.request import urlopen
-
 from bs4 import BeautifulSoup
 import urllib.request
 import re
@@ -8,7 +7,9 @@ import json
 url = 'http://export.arxiv.org/api/query?search_query=system+dynamics&max_results=3'
 with urlopen(url) as request:
      data = request.read()
+
 number = 1
+
 from xml.etree import ElementTree
 root = ElementTree.fromstring(data)
 
@@ -29,7 +30,7 @@ for element in soup.find_all('a', href=re.compile("stamp\\.jsp")):
     page_response = urllib.request.urlopen(page_url)
     page_soup = BeautifulSoup(page_response.read().decode('utf-8'), "html.parser")
     json_re = re.compile("global\\.document\\.metadata\\s*=\\s*(.+);")
-    if number < 5:
+    if number < 7:
                   for page_element in page_soup.find_all('script', string=re.compile("global\\.document\\.metadata")):
                       match = json_re.search(page_element.string)
                       data_1 = json.loads(match.group(1))
@@ -41,9 +42,10 @@ for element in soup.find_all('a', href=re.compile("stamp\\.jsp")):
                       abstract = data_1['abstract']
                       title_1 = data_1['title']
                       dateOfInsertion = data_1['dateOfInsertion']
+                         
                       print(str(number), '[Title]: ' + title.replace('\n',' '))
                       print('  [Published_date]: ' + published_date)
                       print('  [Authors]: ' + author_name)
-                      print('  [Abstract]: ' + abstract.replace('\n',' '))
+                      print('  [Abstract]: ' + abstract.replace('\n',' ') + '\n')       
 
-    number += 1   
+    number += 1  

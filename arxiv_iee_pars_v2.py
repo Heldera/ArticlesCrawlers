@@ -1,4 +1,5 @@
 from urllib.request import urlopen
+
 from bs4 import BeautifulSoup
 import urllib.request
 import re
@@ -42,10 +43,10 @@ for element in soup.find_all('a', href=re.compile("stamp\\.jsp")):
                       abstract = data_1['abstract']
                       title_1 = data_1['title']
                       dateOfInsertion = data_1['dateOfInsertion']
-                         
+
                       print(str(number), '[Title]: ' + title.replace('\n',' '))
                       print('  [Published_date]: ' + published_date)
-                      print('  [Authors]: ' + author_name)
+                      print('  [Authors]:' + author_name)
                       print('  [Abstract]: ' + abstract.replace('\n',' ') + '\n')       
 
     number += 1  
